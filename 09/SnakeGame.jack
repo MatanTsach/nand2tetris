@@ -1,0 +1,44 @@
+/**
+* Snake Game
+* Creators: Dolev Gabay and Matan Tsach
+* Date: 27/12/2022
+*/
+
+class SnakeGame {
+    field Snake snake;
+    field Ball ball;
+    constructor SnakeGame new() {
+        Screen.clearScreen();
+        Screen.setColor(false);
+        snake = Snake.new();
+    }
+
+    method void run() {
+        var int direction;
+        var char key;
+        var boolean exit;
+        let exit = false;
+        let direction = 3;
+
+        while(~exit) {
+            let key = Keyboard.keyPressed();
+            if (key = 131) { let direction = 1; }   // up arrow
+            if (key = 133) { let direction = 2; }   // down arrow
+            if (key = 130) { let direction = 3; }   // left arrow
+            if (key = 132) { let direction = 4; }   // right arrow
+            snake.Move(direction); // will do here a boolean value that if move is out of bounds will be true
+            if(snake.Strike()) { // self hit in body or out of bounds
+                exit = true;
+            } else if(snake.hitBall()) { 
+                snake.Grow();
+                if(snake.MaxSize()) {
+                    exit = true;
+                    // Todo print YOU WON to screen
+                } else {
+                    ball.Regenerate();
+                }
+            }
+
+        }
+    }
+}

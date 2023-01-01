@@ -1,0 +1,36 @@
+class Snake {
+    field int x;
+    field int y;
+    field Array bodyParts;
+    
+
+    constructor Snake new(int x, int y){
+        let x = x;
+        let y = y;
+        do draw();
+        let bodyParts = Array.new();
+        bodyParts[0] = // TODO :new bodypart
+        
+    }
+
+    method void Move() {
+
+    }
+
+    method boolean Strike() {
+
+    }
+
+    method boolean hitBall() {
+
+    }
+
+    method boolean maxSize() {
+        
+    }
+
+    
+
+    
+
+}
