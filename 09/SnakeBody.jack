@@ -1,14 +1,13 @@
 class SnakeBody {
     field int x,y // Location of the body(square) on the screen
-    field int size;
+    field int size = 2;
 
-   constructor Snake new(int Ax, int Ay, int Asize) {
-      let x = Ax;
-      let y = Ay;
-      let size = Asize;
-      do draw();
-      return this;
-   }
+    constructor Snake new(int Ax, int Ay) {
+        let x = Ax;
+        let y = Ay;
+        do draw();
+        return this;
+    }
 
     method void draw() {
       do Screen.setColor(true);

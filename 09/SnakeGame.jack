@@ -22,11 +22,12 @@ class SnakeGame {
 
         while(~exit) {
             let key = Keyboard.keyPressed();
-            if (key = 131) { let direction = 1; }   // up arrow
-            if (key = 133) { let direction = 2; }   // down arrow
-            if (key = 130) { let direction = 3; }   // left arrow
-            if (key = 132) { let direction = 4; }   // right arrow
-            snake.Move(direction); // will do here a boolean value that if move is out of bounds will be true
+            if (key = 131) { do snake.setDirection(1); }   // up arrow
+            if (key = 133) { do snake.setDirection(2); }   // down arrow
+            if (key = 130) { do snake.setDirection(3); }   // left arrow
+            if (key = 132) { do snake.setDirection(4); }   // right arrow
+
+            snake.Move(); // will do here a boolean value that if move is out of bounds will be true
             if(snake.Strike()) { // self hit in body or out of bounds
                 exit = true;
             } else if(snake.hitBall()) { 

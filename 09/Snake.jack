@@ -1,20 +1,34 @@
 class Snake {
-    field int x;
-    field int y;
+    field SnakeBody head;
     field Array bodyParts;
-    
+    field int size;
+    field int direction; // 1 = up, 2 = down, 3 = left, 4 = right
 
     constructor Snake new(int x, int y){
-        let x = x;
-        let y = y;
-        do draw();
-        let bodyParts = Array.new();
-        bodyParts[0] = // TODO :new bodypart
-        
+        let bodyParts = Array.new(28); // max size for snake
+        let head = SnakeBody.new(127, 255); // Drawing the head in the middle of the screen
+        bodyParts[0] = head;
+        let size = 1;       
+        let direction = 4; 
     }
 
     method void Move() {
-
+        let i = 0;
+        while(i < size) {
+            if(direction = 1) {
+                do bodyParts[i].moveUp();
+            }
+            if(direction = 2) {
+                do bodyParts[i].moveDown();
+            }
+            if(direction = 3) {
+                do bodyParts[i].moveLeft();
+            }
+            if(direction = 4) {
+                do bodyParts[i].moveRight();
+            }
+        }
+        
     }
 
     method boolean Strike() {
@@ -26,7 +40,11 @@ class Snake {
     }
 
     method boolean maxSize() {
-        
+
+    }
+
+    method void setDirection(int dir) {
+        let direction = dir;
     }
 
     
