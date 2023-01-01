@@ -1,8 +1,8 @@
 class SnakeBody {
-    field int x,y // Location of the body(square) on the screen
-    field int size = 2;
+    field int x,y,size; // Location of the body(square) on the screen
 
-    constructor Snake new(int Ax, int Ay) {
+    constructor SnakeBody new(int Ax, int Ay) {
+        let size = 20; // changeable
         let x = Ax;
         let y = Ay;
         do draw();
@@ -48,8 +48,9 @@ class SnakeBody {
          let x = x - 2;
          do Screen.setColor(true);
          do Screen.drawRectangle(x, y, x + 1, y + size);
+         return true;
       }
-      return;
+      return false;
    }
 
    /** Moves the square right by 2 pixels. */
