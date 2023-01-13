@@ -1,0 +1,56 @@
+class Simon {
+    field int size;
+    field int roundCounter;
+    field SimonRound currentRound;
+    constructor Simon new(){
+        let size = 50;
+        do drawBoard();
+        do startGame();
+        return this;
+    }
+
+    method void startGame() {
+        var int i;
+        let i = 3;
+        
+        while(i > 0) { // 3 
+            do Output.moveCursor(22, 20); // So it will be in the bottom middle
+            do Output.printString("Starting Game in ");
+            do Output.printInt(i);
+            do Output.printString(" ...");
+            let i = i - 1;
+            do Sys.wait(1000);
+        }
+        do generateRound(1);
+        return;
+    }
+
+    method void drawBoard() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(141, 13, 231, 103);
+        do Screen.drawRectangle(281, 13, 371, 103);
+        do Screen.drawRectangle(141, 143, 231, 233);
+        do Screen.drawRectangle(281, 143, 371, 233);
+        return;
+    }
+
+    method void generateRound(int roundNum) {
+        if(roundNum > 1) {
+            do currentRound.dispose();
+        }
+        let currentRound = SimonRound.new(roundNum);
+        return;
+    }
+
+    method boolean checkWinLoss() {
+        var int winloss;
+
+        let winloss = currentRound.getWinLoss();
+        return winloss;
+    }
+
+    method void setSquareHit(int square) {
+        do currentRound.Hit(square);
+        return;
+    }
+}

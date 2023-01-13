@@ -1,0 +1,91 @@
+class SimonRound {
+    field int numOfLevels;
+    field int currLevel;
+    field Array randomLevels;
+    field Array userLevels;
+    field int roundStatus; // 0 = not over, 1 = lost, 2 = won
+
+    constructor SimonRound new(int n) {
+        let roundStatus = 0;
+        let numOfLevels = n * 3;
+        let currLevel = 0;
+        let randomLevels = Array.new(numOfLevels);
+        let userLevels = Array.new(numOfLevels);
+        do clearLine();
+        do Output.moveCursor(22, 20); // So it will be in the bottom middle
+        do Output.printString("Round ");
+        do Output.printInt(n);
+        do Output.printString(" - Pattern Generation");
+        do generateLevels();
+        return this;
+    }
+
+    method void generateLevels() {
+        var int i;
+        var int rpoke;
+        var int random;
+
+        let i = 0;
+        while(i < numOfLevels) {
+            let random = Random.randRange(3);
+            let randomLevels[i] = random + 1; // so it'll be 1..4
+            do paintSquare(randomLevels[i], false); // painting white
+            do Sys.wait(1000);
+            do paintSquare(randomLevels[i], true); // painting black
+            do Sys.wait(1000);
+            let i = i + 1;
+        }
+        do clearLine();
+        do Output.moveCursor(22, 30); // So it will be in the bottom middle
+        do Output.printString("YOUR TURN");
+        return;
+    }
+
+    method void clearLine() {
+        do Output.moveCursor(22, 20); // So it will be in the bottom middle
+        do Output.printString("                            "); // clearing the text from before
+        return;
+    }
+
+    method void paintSquare(int squareNum, boolean color) {
+        do Screen.setColor(color);
+        if(squareNum = 1) { do Screen.drawRectangle(141, 13, 231, 103); }
+        if(squareNum = 2) { do Screen.drawRectangle(281, 13, 371, 103); }
+        if(squareNum = 3) { do Screen.drawRectangle(141, 143, 231, 233); }
+        if(squareNum = 4) { do Screen.drawRectangle(281, 143, 371, 233); }
+        return;
+    }
+
+    method void dispose() {
+        do randomLevels.dispose();
+        do userLevels.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method int getWinLoss() {
+        return roundStatus;
+    }
+
+    method void Hit(int square) {
+        var int i;
+
+        do paintSquare(square, false);
+        do Sys.wait(1000);
+        do paintSquare(square, true);
+        let userLevels[currLevel] = square;
+        let currLevel = currLevel + 1;
+
+        if(currLevel = numOfLevels) {
+            while(i < numOfLevels) {
+                if(~(userLevels[i] = randomLevels[i])) {
+                    let roundStatus = 1; // LOST
+                    return;
+                }
+                let i = i + 1; 
+            }
+            let roundStatus = 2; // WON
+        }
+        return;
+    }
+}

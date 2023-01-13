@@ -1,0 +1,92 @@
+/**
+* Simon Game
+* Creators: Dolev Gabay and Matan Tsach
+* Date: 27/12/2022
+*/
+
+class SimonGame {
+    field Simon simon;
+    field int ROUNDS;
+    field int seed;
+    constructor SimonGame new() {
+        let seed = 0;
+        let ROUNDS = 4;
+        do Screen.clearScreen();
+        do Screen.setColor(false);
+        do introduction();
+        do Screen.clearScreen();
+        do Random.setSeed(seed);
+        let simon = Simon.new();
+        return this;
+    }
+
+    method void clearLine() {
+        do Output.moveCursor(22, 20); // So it will be in the bottom middle
+        do Output.printString("                            "); // clearing the text from before
+        return;
+    }
+
+    method void run() {
+        var int key;
+        var boolean exit;
+        var int currentRound;
+        let currentRound = 1;
+        
+        while(true) {
+            let key = Keyboard.keyPressed();
+            if (key = 131) { do simon.setSquareHit(1); }   // up arrow
+            if (key = 133) { do simon.setSquareHit(2); }   // down arrow
+            if (key = 130) { do simon.setSquareHit(3); }   // left arrow
+            if (key = 132) { do simon.setSquareHit(4); }   // right arrow
+            if (~(simon.checkWinLoss() = 0)) {
+                if(simon.checkWinLoss() = 1) {
+                    do clearLine();
+                    do Output.moveCursor(22, 30);
+                    do Output.printString("YOU LOST!");
+                    return;
+                } else {
+                    do Sys.wait(500);
+                    if(currentRound = ROUNDS) {
+                        do clearLine();
+                        do Output.moveCursor(22, 30);
+                        do Output.printString("YOU WON!!!!!");
+                        return;
+                    }
+                    let currentRound = currentRound + 1;
+                    do simon.generateRound(currentRound);
+                }
+            }
+            while(~(key = 0)) {
+                let key = Keyboard.keyPressed();
+            }
+        }
+        return;
+    }
+
+    method void introduction() {
+        var int key;
+        do Output.printString("Welcome to Matan and Dolev's SIMON game.");
+        do Output.println();
+        do Output.printString("The game has 4 rounds.");
+        do Output.println();
+        do Output.printString("In each round, you must repeat the random sequence shown on the screen.");
+        do Output.println();
+        do Output.println();
+        do Output.printString("To press the top left square, use the UP arrow key");
+        do Output.println();
+        do Output.printString("To press the top right square, use the DOWN arrow key");
+        do Output.println();
+        do Output.printString("To press the down left square, use the LEFT arrow key");
+        do Output.println();
+        do Output.printString("To press the down right square, use the RIGHT arrow key");
+        do Output.println();
+        do Output.println();
+        do Output.printString("Press Space to start. GOOD LUCK!");
+        let key = Keyboard.keyPressed();
+        while(~(key=32)) {
+            let key = Keyboard.keyPressed();
+            let seed = seed + 1; // generate a "random" seed...
+        }
+        return;
+    }
+}
